@@ -1,0 +1,17 @@
+pkg load communications
+
+clc
+clear all
+k=input("enter the length of msg used:")
+n=input("enter the length of codewod used:")
+p=input("enter the parity matrix:")
+
+G=[eye(k), p]
+m=input("Enter msg wod:")
+c=encode(m,n,k,'linear',G)
+D=decode(c,n,k,'linear',G)
+
+H=[p' eye(n-k)]
+R=input("enter the received codeword")
+s=rem(R * H', 2)
+
