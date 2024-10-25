@@ -1,0 +1,47 @@
+clc;
+clear all;
+
+n = input("Enter the input bits as a row vector (e.g., [1 0 1 1]): ");
+
+nn = zeros(size(n));
+for ii = 1:length(n)
+    if n(ii) == 1
+        nn(ii) = 3;
+    else
+        nn(ii) = 0;
+    endif
+endfor
+
+i = 1;
+t = 0:0.01:length(n);
+y = zeros(size(t));
+for j = 1:length(t)
+    if t(j) < i
+        y(j) = nn(i);
+    elseif t(j) >= i && t(j) < (i + 0.01)
+        y(j) = nn(i);
+    else
+        i = i + 1;
+        if i <= length(nn)
+            y(j) = nn(i);
+        else
+            y(j) = 0;
+        endif
+    endif
+endfor
+
+fc = 2;
+x = y .* cos(2 * pi * fc * t);
+
+figure(1)
+plot(t, y, '-r')
+title('Pulse Shaped Signal')
+xlabel('Time')
+ylabel('Amplitude')
+axis([0 length(n) -5 5]);
+
+figure(2)
+plot(t, x)
+title('Cosine Modulated Signal')
+xlabel('Time')
+ylabel('Amplitude')
